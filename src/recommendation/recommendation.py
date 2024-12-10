@@ -20,9 +20,14 @@ class RecommendationEngine:
 
     def recommend_movies(self, user_input, top_n=5):
         user_input_processed = preprocess_text(user_input)
+        prefrences= user_input_processed.split()
+        self.movies['boosted_features']=(self.movies['Genre'].apply(lambda x: ' '.join([x] * 3)) + ' ' + 
+        self.movies['Description']
+    ).apply(preprocess_text)
+        tfidf_matrix = self.tfidf_vectorizer.fit_transform(self.movies['boosted_features'])
         user_vec = self.tfidf_vectorizer.transform([user_input_processed])
         
-        similarity_scores = cosine_similarity(user_vec, self.tfidf_matrix)
+        similarity_scores = cosine_similarity(user_vec, tfidf_matrix)
         
         top_indices = similarity_scores.argsort()[0][-top_n:][::-1]
         
