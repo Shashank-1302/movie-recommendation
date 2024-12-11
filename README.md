@@ -1,6 +1,6 @@
 # movie-recommendation
 recommends you movie based on your prompts
 
-'''bash
+```bash
 cd src
 pyton app.py
